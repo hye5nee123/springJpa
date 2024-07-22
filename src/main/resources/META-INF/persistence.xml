@@ -13,9 +13,11 @@
 
             <!-- 옵션 -->
             <property name="hibernate.show_sql" value="true"/>
+            <!--예쁘게 보여줌 -->
             <property name="hibernate.format_sql" value="true"/>
+            <!--query가 왜 나왔는지 알려줌. -->
             <property name="hibernate.use_sql_comments"  value="true"/>
-            <property name="hibernate.hbm2ddl.auto" value="create" />
+            <property name="hibernate.hbm2ddl.auto" value="update" />
         </properties>
     </persistence-unit>
 
