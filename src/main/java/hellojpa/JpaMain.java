@@ -1,6 +1,7 @@
 package hellojpa;
 
 import jakarta.persistence.*;
+import java.util.List;
 
 public class JpaMain {
 
@@ -13,6 +14,10 @@ public class JpaMain {
         //시작
         tx.begin();
 
+
+        //엔티티 매니저는 쓰레드 공간에 공유X(사용하고 버려야 함)
+        //JPA의 모든 데이터 변경은 트랜잭션 안에서 실행(중요)
+
         try{
 //            //code
 //            Member member = new Member();
@@ -20,11 +25,21 @@ public class JpaMain {
 //
 //            member.setId(10L);
 //            member.setName("HelloB");
-                Member findMember = em.find(Member.class, 1);
-                findMember.setName("HelloJPA");
+//                Member findMember = em.find(Member.class, 1);
+//                findMember.setName("HelloJPA");
 //                //코드를 저장해라.
 //                em.persist(member);
                 //정상적이면 commit
+            //가져올 때는 Table이 대상이 아니라 객체를 대상으로 싹다 가져옴.
+           List<Member> result = em.createQuery("SELECT m FROM Member as m", Member.class)
+                   //paging 쉽게 가능
+                   .setFirstResult(5)
+                   .setMaxResults(10)
+                   .getResultList();
+
+           for ( Member member : result ) {
+               System.out.printf("member.name = " + member.getName());
+           }
                 tx.commit();
 
         } catch (Exception e){
